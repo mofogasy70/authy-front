@@ -1,13 +1,14 @@
 import { Input, Button, message, Spin } from 'antd';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserOutlined } from '@ant-design/icons';
 import parse from 'device-detector-js';
 import platform from 'platform';
 import { VITE_URIAPI } from '../../constant';
-import { svgBackground } from '../../assets/image/svg';
 import { NoticeType } from 'antd/es/message/interface';
+import { Controller, useForm } from "react-hook-form"
+import { z } from "zod"
 interface AuthenticationResponse {
     isurl: boolean;
     istoken: boolean;
@@ -15,6 +16,49 @@ interface AuthenticationResponse {
     token: any
 }
 function Login() {
+    const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState<string>("")
+
+    const schema = useMemo(() => {
+        return z.object({
+            email: z.string().min(1, "Ce champ ne doit pas être vide").email("Invalide email"),
+            password: z.string().min(1, "Ce champ ne doit pas être vide"),
+        })
+    }, [])
+
+    type AuthInput = z.infer<typeof schema>;
+
+    const { formState, control, handleSubmit } = useForm<AuthInput>({
+        defaultValues: {
+            email: "",
+            password: ""
+        },
+        mode: "onTouched"
+    })
+    const onSubmit = useCallback(async (values: AuthInput) => {
+        setLoading(true)
+        setErrorMessage("")
+        try {
+            const {data} = await axios.post(`/api/auth/login`, values)
+            if (data.errorMessage) {
+                switch(data.errorMessage) {
+                    case "LOGIN.INVALID_CREDENTIAL":
+                        setErrorMessage("Identifiant ou mot de passe invalide.")
+                        break
+                    case "LOGIN.ACCOUNT_DISABLED":
+                        setErrorMessage("Votre compte n'est pas activé.")
+                        break
+                }
+            } else {
+                navigate("/")
+            }
+        } catch (error) {
+            setErrorMessage("Ooops! une erreur est survenue")
+        }
+        setLoading(false)
+    }, [ navigate])
+
+
     const [messageApi, contextHolder] = message.useMessage();
     const [contentButton, setcontentButton] = useState<any>("Sign in");
     const [statButton, setstatButton] = useState<boolean>(false);
@@ -107,7 +151,7 @@ function Login() {
                         <p >Password</p>
                         <Input.Password required className='rounded-sm h-11' value={Password} onChange={settempPassword}></Input.Password>
                         <p><a href="#forgot" className='text-blue-600'>you forgot your password?</a></p>
-                        <Button  disabled={statButton} className='w-full bg-blue-600 text-white rounded-sm h-11 font-blinkmacsystem' onClick={authentification}>{contentButton}</Button>
+                        <Button disabled={statButton} className='w-full bg-blue-600 text-white rounded-sm h-11 font-blinkmacsystem' onClick={authentification}>{contentButton}</Button>
                         <p>You dont have account ? <Link to="/Register" className='text-blue-600'> Sign Up</Link></p>
                     </div>
                     <div className='hidden'>

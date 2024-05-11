@@ -29,9 +29,8 @@ const Navbar: React.FC<SidebarProps> = ({ menumode, setMenumode }) => {
     return (
         <div className='w-full h-[70px] md:h-20 flex items-center justify-center md:sticky md:top-0 md:z-50 md:opacity-80 font-blinkmacsystem'>
             <div className='w-full h-full md:w-11/12 flex space-x-1 items-center'>
-                <div className='w-52 md:w-60 h-10 md:h-14 flex bg-white items-center justify-center text-base md:text-lg shadow-md rounded-full hover:shadow-blue-300  ease-in duration-300 font-blinkmacsystem space-x-1'>
-                    <Button icon={<MenuFoldOutlined />} onClick={() => { setMenumode(!menumode) }} className='border-none min-w-min min-h-min flex justify-center items-center'>
-                    </Button>
+                <div className='w-52 md:w-60 h-10 md:h-14 flex bg-white items-center justify-center text-base md:text-lg shadow-md rounded-full hover:shadow-blue-300  ease-in duration-300 font-blinkmacsystem space-x-3'>
+                    <MenuFoldOutlined  onClick={() => { setMenumode(!menumode) }} className='border-none min-w-min min-h-min flex justify-center items-center'/>
                     <div>{daysj(new Date()).format("ddd, MMMM YYYY")}</div>
                 </div>
                 <div className='flex-grow'></div>

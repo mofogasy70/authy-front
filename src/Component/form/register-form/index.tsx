@@ -4,11 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import InputController from "../../inputController";
 import { useCallback, useMemo, useState } from "react";
 import { VITE_URIAPI } from "../../../constant";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { NoticeType } from "antd/es/message/interface";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import country from "country-codes-list";
+import { zodResolver } from '@hookform/resolvers/zod';
 const RegisterForm = () => {
     const uri = VITE_URIAPI;
     const [loading, setLoading] = useState(false);
@@ -120,8 +120,7 @@ const RegisterForm = () => {
                 className="h-10 w-full rounded-sm"
                 picker="date"
                 onChange={(e) => { setValue("DateBirth", e ? e.toISOString() : new Date().toISOString()) }}
-            >
-            </DatePicker>
+            />
         </div>
         <div>
             <select className="mt-3 h-11 w-full border" defaultValue={countrycode} onChange={(e) => {
@@ -177,7 +176,7 @@ const RegisterForm = () => {
             <Input
                 placeholder="Confirm password"
                 type="password"
-                className={`h-11 rounded-sm ${ConfPassword != getValues("password")&& `border-red-500`}`}
+                className={`h-11 rounded-sm ${ConfPassword != getValues("password") && `border-red-500`}`}
                 suffix={<LockOutlined />}
                 onChange={(e) => { setConfPassword(e.target.value) }}
             />

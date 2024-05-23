@@ -6,13 +6,23 @@ import Application from "../../Page/users/Application/Application";
 import Activity from "../../Page/users/Activity/Activity";
 import AccountApplication from "../../Page/users/AccountApplication/AccountApplication";
 import { JSXElementConstructor, ReactElement, ReactNode, useRef } from "react";
-import { AppstoreOutlined, CarryOutOutlined, DashboardOutlined, HomeOutlined, SecurityScanOutlined, UserOutlined } from "@ant-design/icons";
 import { VITE_URIAPI } from "../../constant";
 import jwtDecode from "jwt-decode";
 import adminService from "../admin/adminService";
 import { Button, Result } from "antd";
 import { NoticeType } from "antd/es/message/interface";
 import devService from "../dev/devService";
+import Connection from "../../Page/users/Connection";
+import { DeviceIcon } from "../../assets/icon/DeviceIcon";
+import { RequestIcon } from "../../assets/icon/RequestIcon";
+import { HomeIcon } from "../../assets/icon/HomeIcon";
+import { DasbboardIcon } from "../../assets/icon/DasbboardIcon";
+import { AccountIcon } from "../../assets/icon/AccountIcon";
+import { AppIcon } from "../../assets/icon/AppIcon";
+import { PersonnalDataIcon } from "../../assets/icon/personnalDataIcon";
+import { SecurityIcon } from "../../assets/icon/SecurityIcon";
+import { HistoriqueIcon } from "../../assets/icon/HistoriqueIcon";
+import { ActivityIcon } from "../../assets/icon/ActivityIcon";
 interface IsubMenu {
     title: string,
     link: string,
@@ -54,6 +64,9 @@ class userService {
                 path: "Application", element: <Application />,
             },
             {
+                path: "Connection", element: <Connection />,
+            },
+            {
                 path: "Application", element: <Outlet />,
                 children: [
                     {
@@ -78,19 +91,27 @@ class userService {
         Item = [
             {
                 title: "Home",
-                icon: <HomeOutlined />,
+                icon: <HomeIcon />,
                 submenu: [
-                    { title: "Dashboard", link: "/acceuil", icon: <DashboardOutlined /> },
+                    { title: "Dashboard", link: "/acceuil", icon: <DasbboardIcon /> },
+                ]
+            },
+            {
+                title: "Historical",
+                icon: <HistoriqueIcon />,
+                submenu: [
+                    { title: "Activity", link: "/acceuil/Activity", icon: <ActivityIcon /> },
+                    { title: "Connection", link: "/acceuil/Connection", icon: <RequestIcon /> },
+                    { title: "Device", link: "/acceuil/Device", icon: <DeviceIcon /> },
                 ]
             },
             {
                 title: "Account",
-                icon: <UserOutlined />,
+                icon: <AccountIcon />,
                 submenu: [
-                    { title: "Activity", link: "/acceuil/Activity", icon: <CarryOutOutlined /> },
-                    { title: "personnal Data", link: "/acceuil/PersonnalData", icon: <UserOutlined /> },
-                    { title: "security", link: "/acceuil/AccountSecurity", icon: <SecurityScanOutlined /> },
-                    { title: "Application", link: "/acceuil/Application", icon: <AppstoreOutlined /> },
+                    { title: "Application", link: "/acceuil/Application", icon: <AppIcon /> },
+                    { title: "personnal Data", link: "/acceuil/PersonnalData", icon: <PersonnalDataIcon /> },
+                    { title: "security", link: "/acceuil/AccountSecurity", icon: <SecurityIcon /> },
                 ]
             }
         ]

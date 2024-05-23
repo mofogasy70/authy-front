@@ -40,15 +40,15 @@ const Sidebar: React.FC<SidebarProps> = ({ menumode, setMenumode,menu }) => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     return (
         <Sider className="min-h-screen border" collapsed={isMobile} hidden={menumode}>
-            <div className='h-16 flex items-center justify-center border-b-1 '><img className='h-full' src={logo} /></div>
+            <div className='h-16 flex items-center justify-center border-b-1 '></div>
             <div className='h-16 flex items-center justify-center'></div>
             {menu.map((menu: IMenu, index: number = 2) => (
                 <Menu key={index} mode="inline" selectedKeys={[activeMenuItem]}>
-                    <SubMenu className='font-blinkmacsystem' key={index} title={menu.title} icon={menu.icon} >
+                    <SubMenu className='font-blinkmacsystem' key={index} title={<div className='ml-1'>{menu.title}</div>} icon={menu.icon} >
                         {menu.submenu.map((submenud: IsubMenu, index: number = 2) => (
-                            <Menu.Item key={submenud.link} onClick={() => handleMenuItemClick(submenud.link)}><Link to={submenud.link} className='space-x-1 flex'>
-                                <p>{submenud.icon}</p>
-                                <p>{submenud.title}</p>
+                            <Menu.Item key={submenud.link} onClick={() => handleMenuItemClick(submenud.link)}><Link to={submenud.link} className='space-x-2 flex items-center justify-start'>
+                                <div>{submenud.icon}</div>
+                                <div className='flex items-center justify-center'>{submenud.title}</div>
                             </Link></Menu.Item>
                         ))}
                     </SubMenu>

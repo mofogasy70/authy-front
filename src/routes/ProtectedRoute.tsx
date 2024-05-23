@@ -38,18 +38,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
       duration: 1.5,
     });
   }
-  useEffect(() => {
-    console.log(String(decode.UserId));
-    socket.on("test", (data: any) => { 
-      notification(data.type, data.message);
-    });
-    return () => {
-      socket.off("test");
-    };
-  }, [])
+  socket.on(String(decode.UserId), (data: any) => {
+    notification(data.type, data.message);
+  });
   const test = () => {
-    socket.emit('notification', { type: "success", message: "mety", UserId: "663a0d099aa6f42ace6861f3" });
-    console.log({ type: "success", message: "mety", UserId: "663a0d099aa6f42ace6861f3" });
+    socket.emit('notification', { type: "success", message: "tsy nety", UserId: "663a0d099aa6f42ace6861f3", user: String(decode.UserId) });
   }
   useEffect(() => {
     const checkTokenValidity = async () => {
@@ -94,10 +87,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
               {element}
             </div>
           </div>
+          <div className="mt-5 h-12 bg-white flex items-center justify-start font-blinkmacsystem">
+            <div className="flex items-center justify-center space-x-2 ml-1">
+              <div className="font-semibold text-xs text-gray-600">Copyright © September 2023 </div>
+              <div className="text-blue-400 text-xs font-semibold">YOUNGDEV .</div>
+            </div>
+          </div>
         </div>
       </div>
-      <button onClick={test}>test</button>
-      <Foot />
     </div>
   );
 };
